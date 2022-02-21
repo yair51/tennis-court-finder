@@ -1,6 +1,7 @@
 from flask_login.mixins import UserMixin
 from sqlalchemy.orm import backref
 from . import db
+from datetime import datetime
 # from flask_login import UserMixin
 
 
@@ -32,4 +33,11 @@ class Location(db.Model):
 class Court(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location_id = db.Column(db.Integer, db.ForeignKey('location.id'))
+    court_status = db.relationship('CourtStatus', backref=db.backref('court'))
     # arduino_id ToDo
+
+class CourtStatus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    is_open = db.Column(db.Boolean)
+    time = db.Column(db.DateTime, default=datetime.utcnow)
+    court_id = db.Column(db.Integer, db.ForeignKey('court.id'))
