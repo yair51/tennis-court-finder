@@ -55,14 +55,17 @@ def add_court():
 @views.route("/report/<int:court_id>/", methods=['GET', 'POST'])
 def report(court_id):
     # queries the specified court
-    status = request.form.get("status")
+    status = request.args.get("status")
     # if there is data sent, update the court's status
     if status:
         if status == "open":
             new_status = CourtStatus(is_open=True, court_id=court_id)
+            db.session.add(new_status)
         # if in use, set is_open to false in new status
         elif status == "used":
             new_status = CourtStatus(is_open=False, court_id=court_id)
+            db.session.add(new_status)
+        db.session.commit()
     return jsonify({})
 
 
