@@ -1,6 +1,6 @@
 from genericpath import exists
 from unicodedata import category
-from flask import Blueprint, redirect, render_template, request, flash, url_for
+from flask import Blueprint, redirect, render_template, request, flash, url_for, jsonify
 from flask_migrate import current
 from . import db, admin
 from flask_admin.contrib.sqla import ModelView
@@ -51,19 +51,19 @@ def add_location():
 def add_court():
     return render_template("add-court.html", title="Add Court", user=current_user)
 
-@views.route("/report/<int:court_id>", methods=['POST'])
-@views.route("/report/<int:court_id>/", methods=['POST'])
+@views.route("/report/<int:court_id>", methods=['GET', 'POST'])
+@views.route("/report/<int:court_id>/", methods=['GET', 'POST'])
 def report(court_id):
     # queries the specified court
-    is_open = request.form.get("status")
+    status = request.form.get("status")
     # if there is data sent, update the court's status
-    if is_open:
-        if is_open == "open":
+    if status:
+        if status == "open":
             new_status = CourtStatus(is_open=True, court_id=court_id)
         # if in use, set is_open to false in new status
-        elif is_open == "used":
+        elif status == "used":
             new_status = CourtStatus(is_open=False, court_id=court_id)
-    
+    return jsonify({})
 
 
 admin.add_view(ModelView(User, db.session))
