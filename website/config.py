@@ -19,8 +19,8 @@ class DevelopmentConfig(Config):
     DEBUG = True
     DEVELOPMENT = True
     # using the uri, the url is just a filler
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:tamara12@localhost/programmer-connection-site"
-    #SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///database.db")
+    #SQLALCHEMY_DATABASE_URI = os.getenv()
+    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///database.db")
     print(SQLALCHEMY_DATABASE_URI)
     print('hello')
     FLASK_APP = "main.py"
