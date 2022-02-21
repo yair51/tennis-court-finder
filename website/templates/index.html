@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <!-- <button class="btn btn-primary" type="button" id="button-addon2">Button</button> -->
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for location in locations %}
+    <div class="col">
+      <div class="card">
+        <!-- <img src="..." class="card-img-top" alt="..."> -->
+        <div class="card-body">
+          <h5 class="card-title">{{ location.name }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{location.address }}, {{location.city}}, {{location.state}} {{location.zip_code}}</h6>
+          <!-- <p class="card-text">Interests: {{ location.state}}</p>
+          <p class="card-text">Skills: {{ location.zip_code }}</p> -->
+          <button type="submit" class="btn btn-danger">Full</button>
+          <button type="submit" class="btn btn-primary">View Details</button>
+          <!-- <a href="mailto:yairgritzman@gmail.com"><p>Contact</p></a> -->
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    
+</div>
+{% endblock %}
