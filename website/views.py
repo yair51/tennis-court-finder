@@ -12,6 +12,12 @@ views = Blueprint('views', __name__)
 
 @views.route("/")
 def home():
+    # subquery = db.session.query(CourtStatus.court_id, CourtStatus.status, LocationStatus.time, Location.address, Location.city, Location.state, Organization.name, Location.name.label("location_name"), Location.zip,
+    # func.rank().over(order_by=LocationStatus.time.desc(),
+    # partition_by=LocationStatus.location_id).label('rnk')).filter(Location.id == LocationStatus.location_id, Location.organization_id == Organization.id).subquery()
+    # # queries locations and takes the first locations
+    # locations = db.session.query(subquery).filter(
+    # subquery.c.rnk==1)
     locations = db.session.query(Location)
     for location in locations:
         print(location)
@@ -66,7 +72,7 @@ def report(court_id):
             new_status = CourtStatus(is_open=False, court_id=court_id)
             db.session.add(new_status)
         db.session.commit()
-    return jsonify({})
+    return render_template("report.html", title="Report", user=current_user)
 
 
 admin.add_view(ModelView(User, db.session))
