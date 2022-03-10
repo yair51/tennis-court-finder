@@ -30,6 +30,12 @@ class Location(db.Model):
      court = db.relationship('Court', backref=db.backref('location'))
     #  country = db.Column(db.String(150))
 
+class LocationStatus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    is_open = db.Column(db.Boolean)
+    time = db.Column(db.DateTime, default=datetime.utcnow)
+    location_id = db.Column(db.Integer, db.ForeignKey('location.id'))
+
 class Court(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location_id = db.Column(db.Integer, db.ForeignKey('location.id'))

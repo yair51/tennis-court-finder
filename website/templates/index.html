@@ -14,12 +14,24 @@
           <h6 class="card-subtitle mb-2 text-muted">{{location.address }}, {{location.city}}, {{location.state}} {{location.zip_code}}</h6>
           <!-- <p class="card-text">Interests: {{ location.state}}</p>
           <p class="card-text">Skills: {{ location.zip_code }}</p> -->
+          {% if location.is_open %}
+          <button type="submit" class="btn btn-success">Open</button>
+          {% else %}
           <button type="submit" class="btn btn-danger">Full</button>
-          <button type="submit" class="btn btn-primary">View Details</button>
+          {% endif %}
+          <a href="/logs/{{ location.location_id }}"><button type="submit" class="btn btn-primary">History</button></a>
+          <!-- <br> -->
+          <p id="time{{location.location_id}}">Last Update: {{ location.time.strftime("%c") }}</p>
           <!-- <a href="mailto:yairgritzman@gmail.com"><p>Contact</p></a> -->
         </div>
       </div>
     </div>
+    <script>
+      var time = document.getElementById('time' + {{location.location_id}}).innerHTML;
+      var old_date = new Date(time + ' UTC');
+      document.getElementById('time' + {{location.location_id}}).innerHTML = old_date.toLocaleString();
+    </script>
+  
     {% endfor %}
     
 </div>
